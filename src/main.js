@@ -5,7 +5,9 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import titleMixin from './mixins/titleMixin'
 
+// Styles
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import './assets/scss/main.scss'
 
 Vue.mixin(titleMixin)
 Vue.config.productionTip = false

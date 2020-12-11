@@ -7,15 +7,21 @@
       temporary
     >
       <v-list>
-        <v-list-item>
+        <v-list-item
+          v-for="(item,
+          index) in menuItems"
+          :key="index"
+          router
+          :to="item.link"
+        >
           <v-list-item-action>
             <v-icon>
-              calendar_today
+              {{ item.icon }}
             </v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
-            Events
+            {{ item.title }}
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -30,19 +36,32 @@
       />
 
       <v-toolbar-title>
-        Vue MeetUp
+        <router-link
+          to="/"
+          tag="span"
+          class="has-cursor"
+        >
+          Vue MeetUp
+        </router-link>
       </v-toolbar-title>
 
       <v-spacer />
 
       <v-toolbar-items
+        v-for="(item,
+        index) in menuItems"
+        :key="index"
         class="d-none d-sm-flex"
       >
-        <v-btn text>
-          <v-icon left>
-            calendar_today
+        <v-btn
+          text
+          router
+          :to="item.link"
+        >
+          <v-icon class="mr-2">
+            {{ item.icon }}
           </v-icon>
-          Events
+          {{ item.title }}
         </v-btn>
       </v-toolbar-items>
     </v-app-bar>
@@ -53,7 +72,34 @@
 export default {
   name: 'AppHeader',
   data: () => ({
-    sideNav: false
+    sideNav: false,
+    menuItems: [
+      {
+        icon: 'calendar_today',
+        title: 'View MeetUps',
+        link: '/meetups'
+      },
+      {
+        icon: 'location_on',
+        title: 'Organize MeetUp',
+        link: '/organize'
+      },
+      {
+        icon: 'face',
+        title: 'Profile',
+        link: '/profile'
+      },
+      {
+        icon: 'how_to_reg',
+        title: 'Sign Up',
+        link: '/sign-up'
+      },
+      {
+        icon: 'lock_open',
+        title: 'Sign In',
+        link: 'sign-in'
+      }
+    ]
   })
 }
 </script>
