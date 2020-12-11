@@ -4,22 +4,15 @@
 
     <v-main>
       <v-container>
-        <router-view></router-view>
+        <h1>MeetUps</h1>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Header from '@/components/Templates/AppHeader'
-
 export default {
-  name: 'App',
-  components: {
-    Header
-  },
-  data: () => ({
-    //
-  })
+  name: 'MeetUps',
+  title: 'Vue MeetUp | View MeetUps'
 }
 </script>
