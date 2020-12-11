@@ -1,13 +1,7 @@
 <template>
-  <v-app>
-    <Header />
-
-    <v-main>
-      <v-container>
-        <h1>Organize MeetUps</h1>
-      </v-container>
-    </v-main>
-  </v-app>
+  <v-container>
+    <h1>Organize MeetUps</h1>
+  </v-container>
 </template>
 
 <script>

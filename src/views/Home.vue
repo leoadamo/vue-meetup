@@ -1,21 +1,17 @@
 <template>
-  <v-app>
-    <Header />
-
-    <v-main>
-      <v-container>
-        <h1>Home</h1>
-      </v-container>
-    </v-main>
-  </v-app>
+  <v-container>
+    <!-- Carousel -->
+    <Carousel />
+  </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
+import Carousel from '@/components/Molecules/Carousel/Carousel'
 
 export default {
   name: 'Home',
   title: 'Vue MeetUp | Home',
-  components: {}
+  components: { Carousel }
 }
 </script>

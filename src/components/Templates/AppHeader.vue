@@ -27,7 +27,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app hide-on-scroll dark>
+    <v-app-bar app hide-on-scroll>
       <v-app-bar-nav-icon
         @click.native.stop="
           sideNav = !sideNav
