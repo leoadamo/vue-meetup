@@ -11,7 +11,6 @@
           v-for="(item,
           index) in menuItems"
           :key="index"
-          router
           :to="item.link"
         >
           <v-list-item-action>
@@ -29,9 +28,7 @@
 
     <v-app-bar app hide-on-scroll>
       <v-app-bar-nav-icon
-        @click.native.stop="
-          sideNav = !sideNav
-        "
+        @click.stop="sideNav = !sideNav"
         class="d-flex d-sm-none"
       />
 
@@ -53,11 +50,7 @@
         :key="index"
         class="d-none d-sm-flex"
       >
-        <v-btn
-          text
-          router
-          :to="item.link"
-        >
+        <v-btn text :to="item.link">
           <v-icon class="mr-2">
             {{ item.icon }}
           </v-icon>
