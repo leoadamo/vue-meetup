@@ -34,9 +34,9 @@
 
       <v-toolbar-title>
         <router-link
-          to="/"
+          :to="{ name: 'Home' }"
           tag="span"
-          class="has-cursor"
+          class="u-has-cursor"
         >
           Vue MeetUp
         </router-link>
