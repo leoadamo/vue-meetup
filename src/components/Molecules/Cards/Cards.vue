@@ -1,7 +1,7 @@
 <template>
   <v-row class="cards" wrap>
     <v-col
-      v-for="(card, index) in cards"
+      v-for="(meetUp, index) in meetUps"
       :key="index"
       class="cards__item"
       cols="12"
@@ -9,7 +9,7 @@
       md="4"
     >
       <Card
-        :card="card"
+        :meetUp="meetUp"
         max-width="400"
         media-height="200"
       />
@@ -26,7 +26,7 @@ export default {
     Card
   },
   props: {
-    cards: {
+    meetUps: {
       type: Array,
       required: true,
       default: null

@@ -19,6 +19,7 @@ const routes = [
   {
     path: '/meetup/:id',
     name: 'MeetUp',
+    props: true,
     component: () =>
       import('../views/MeetUpSingle')
   },

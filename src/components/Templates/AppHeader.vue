@@ -51,7 +51,7 @@
         class="d-none d-sm-flex"
       >
         <v-btn text :to="item.link">
-          <v-icon class="mr-2">
+          <v-icon class="mr-2" small>
             {{ item.icon }}
           </v-icon>
           {{ item.title }}

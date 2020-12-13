@@ -6,21 +6,21 @@
   >
     <v-container fluid pa-0>
       <v-img
-        :src="card.media"
-        :alt="card.title"
+        :src="meetUp.imageUrl"
+        :alt="meetUp.title"
         :height="mediaHeight"
       >
         <v-card-title>
-          {{ card.title }}
+          {{ meetUp.title }}
         </v-card-title>
       </v-img>
 
       <v-card-subtitle>
-        {{ card.subtitle }}
+        {{ meetUp.date }}
       </v-card-subtitle>
 
       <v-card-text>
-        {{ card.intro }}
+        {{ meetUp.intro }}
       </v-card-text>
     </v-container>
 
@@ -29,8 +29,8 @@
         :to="{
           name: 'MeetUp',
           params: {
-            id: card.id,
-            title: card.title
+            id: meetUp.id,
+            title: meetUp.title
           }
         }"
       >
@@ -44,7 +44,7 @@
 export default {
   name: 'Card',
   props: {
-    card: {
+    meetUp: {
       type: Object,
       required: true,
       default: null
