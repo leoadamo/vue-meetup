@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8">
         <Card
           :card="card"
-          media-height="600"
+          media-height="500"
         />
       </v-col>
     </v-row>
