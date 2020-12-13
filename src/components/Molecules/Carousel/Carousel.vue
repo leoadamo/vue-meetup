@@ -2,7 +2,10 @@
   <div class="carousel">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <v-carousel>
+        <v-carousel
+          cycle
+          interval="3000"
+        >
           <v-carousel-item
             v-for="(meetup,
             index) in meetups"
@@ -11,9 +14,9 @@
             reverse-transition="fade-transition"
             transition="fade-transition"
           >
-            <h1 class="carousel__title">
+            <h2 class="carousel__title">
               {{ meetup.title }}
-            </h1>
+            </h2>
           </v-carousel-item>
         </v-carousel>
       </v-col>
@@ -24,11 +27,11 @@
         cols="12"
         class="text-center"
       >
-        <h2
+        <h1
           class="carousel__description"
         >
           Enjoy our amazing MeetUps!
-        </h2>
+        </h1>
       </v-col>
     </v-row>
 
