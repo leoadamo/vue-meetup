@@ -8,11 +8,19 @@
         >
           <v-carousel-item
             v-for="(meetup,
-            index) in meetups"
+            index) in featuredMeetUps"
             :key="index"
-            :src="meetup.cover"
+            :src="meetup.imageUrl"
+            :to="{
+              name: 'MeetUp',
+              params: {
+                id: meetup.id,
+                title: meetup.title
+              }
+            }"
             reverse-transition="fade-transition"
             transition="fade-transition"
+            class="u-has-cursor"
           >
             <h2 class="carousel__title">
               {{ meetup.title }}
@@ -71,29 +79,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Carousel',
-  data: () => ({
-    meetups: [
-      {
-        id: '#0001',
-        title: 'MeetUp Brazil',
-        cover:
-          'https://img.theculturetrip.com/x/smart/wp-content/uploads/2019/04/shutterstock_421013719.jpg'
-      },
-      {
-        id: '#0002',
-        title: 'MeetUp London',
-        cover:
-          'https://london.ac.uk/sites/default/files/styles/max_1300x1300/public/2018-10/london-aerial-cityscape-river-thames_1.jpg?itok=6LenFxuz'
-      },
-      {
-        id: '#0003',
-        title: 'MeetUp Buenos Aires',
-        cover:
-          'https://i.pinimg.com/originals/4e/c2/df/4ec2dfe9b156423bfa5014b62fa6ef98.jpg'
-      }
-    ]
-  })
+  computed: {
+    ...mapGetters(['featuredMeetUps'])
+  }
 }
 </script>

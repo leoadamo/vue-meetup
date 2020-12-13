@@ -34,9 +34,9 @@
 
       <v-toolbar-title>
         <router-link
-          to="/"
+          :to="{ name: 'Home' }"
           tag="span"
-          class="has-cursor"
+          class="u-has-cursor"
         >
           Vue MeetUp
         </router-link>
@@ -51,7 +51,7 @@
         class="d-none d-sm-flex"
       >
         <v-btn text :to="item.link">
-          <v-icon class="mr-2">
+          <v-icon class="mr-2" small>
             {{ item.icon }}
           </v-icon>
           {{ item.title }}
