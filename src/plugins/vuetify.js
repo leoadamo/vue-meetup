@@ -14,7 +14,8 @@ export default new Vuetify({
         secondary: colors.grey.darken3, // #424242
         tertiary: colors.grey.lighten3, // #EEEEEE
         accent: colors.green.accent4, // #00C853
-        white: colors.white // #FFFFFF
+        white: colors.white, // #FFFFFF,
+        error: colors.red.darken1 // #E53935
       }
     }
   }
