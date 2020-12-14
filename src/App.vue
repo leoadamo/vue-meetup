@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Header from '@/components/Templates/AppHeader'
 
 export default {
@@ -16,8 +17,11 @@ export default {
   components: {
     Header
   },
-  data: () => ({
-    //
-  })
+  created() {
+    this.loadMeetUps()
+  },
+  methods: {
+    ...mapActions(['loadMeetUps'])
+  }
 }
 </script>
