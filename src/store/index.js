@@ -6,35 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    meetUps: [
-      {
-        id: 1,
-        title: 'MeetUp Brazil',
-        intro:
-          'A nice Vue.js MeeUp at Brazil.',
-        date: new Date(),
-        imageUrl:
-          'https://img.theculturetrip.com/x/smart/wp-content/uploads/2019/04/shutterstock_421013719.jpg'
-      },
-      {
-        id: 2,
-        title: 'MeetUp London',
-        intro:
-          'A nice React.js MeeUp at London.',
-        date: new Date(),
-        imageUrl:
-          'https://london.ac.uk/sites/default/files/styles/max_1300x1300/public/2018-10/london-aerial-cityscape-river-thames_1.jpg?itok=6LenFxuz'
-      },
-      {
-        id: 3,
-        title: 'MeetUp Buenos Aires',
-        intro:
-          'A nice Javascript MeeUp at Buenos Aires.',
-        date: new Date(),
-        imageUrl:
-          'https://i.pinimg.com/originals/4e/c2/df/4ec2dfe9b156423bfa5014b62fa6ef98.jpg'
-      }
-    ],
+    meetUps: [],
     user: null,
     isLoading: false,
     hasError: null
@@ -60,15 +32,17 @@ export default new Vuex.Store({
   },
   actions: {
     loadMeetUps: ({ commit }) => {
+      commit('setLoading', true)
       firebase
         .database()
         .ref('meetUps')
         .once('value')
         .then(data => {
+          commit('setLoading', false)
           const meetUps = []
           const response = data.val()
 
-          for (key in response) {
+          for (let key in response) {
             meetUps.push({
               id: key,
               title:
@@ -85,9 +59,10 @@ export default new Vuex.Store({
 
           commit('loadMeetUps', meetUps)
         })
-        .catch(error =>
-          console.log(error)
-        )
+        .catch(error => {
+          commit('setLoading', false)
+          commit('setError', error)
+        })
     },
     createMeetUp: (
       { commit },
