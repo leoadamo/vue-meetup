@@ -62,37 +62,50 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'AppHeader',
   data: () => ({
-    sideNav: false,
-    menuItems: [
-      {
-        icon: 'calendar_today',
-        title: 'View MeetUps',
-        link: '/meetups'
-      },
-      {
-        icon: 'location_on',
-        title: 'Organize MeetUp',
-        link: '/organize'
-      },
-      {
-        icon: 'face',
-        title: 'Profile',
-        link: '/profile'
-      },
-      {
-        icon: 'how_to_reg',
-        title: 'Sign Up',
-        link: '/sign-up'
-      },
-      {
-        icon: 'lock_open',
-        title: 'Sign In',
-        link: 'sign-in'
+    sideNav: false
+  }),
+  computed: {
+    ...mapGetters(['getUser']),
+    menuItems() {
+      let menuItems = [
+        {
+          icon: 'how_to_reg',
+          title: 'Sign Up',
+          link: '/sign-up'
+        },
+        {
+          icon: 'lock_open',
+          title: 'Sign In',
+          link: 'sign-in'
+        }
+      ]
+
+      if (this.getUser) {
+        menuItems = [
+          {
+            icon: 'calendar_today',
+            title: 'View MeetUps',
+            link: '/meetups'
+          },
+          {
+            icon: 'location_on',
+            title: 'Organize MeetUp',
+            link: '/organize'
+          },
+          {
+            icon: 'face',
+            title: 'Profile',
+            link: '/profile'
+          }
+        ]
       }
-    ]
-  })
+      return menuItems
+    }
+  }
 }
 </script>

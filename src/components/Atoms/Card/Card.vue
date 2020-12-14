@@ -16,7 +16,7 @@
       </v-img>
 
       <v-card-subtitle>
-        {{ meetUp.date }}
+        {{ meetUp.date | date }}
       </v-card-subtitle>
 
       <v-card-text>

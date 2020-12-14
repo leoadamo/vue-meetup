@@ -10,6 +10,7 @@
             clearable
             color="accent"
             autofocus
+            autocomplete="off"
             required
             v-model="form.title"
             :rules="rules.title"
@@ -35,28 +36,48 @@
       <v-row justify="center">
         <v-col cols="12" md="8" lg="4">
           <v-text-field
-            label="Date"
-            placeholder="Insert here when the MeetUp will occurs.."
+            label="Location"
+            placeholder="Define the location of the Event..."
             filled
             clearable
             color="accent"
             required
-            v-model="form.date"
-            :rules="rules.date"
+            autocomplete="off"
+            v-model="form.location"
+            :rules="rules.location"
           />
         </v-col>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="12" md="8" lg="4">
-          <v-text-field
-            label="Location"
-            placeholder="Define the location of the Event..."
-            filled
-            clearable
-            color="accent"
-            v-model="form.location"
-            :rules="rules.location"
+          <h3 class="mb-4">
+            Select when the event will
+            occurs:
+          </h3>
+
+          <v-date-picker
+            width="100%"
+            v-model="form.date"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row justify="center">
+        <v-col
+          cols="12"
+          md="8"
+          lg="4"
+          class="d-flex flex-column align-start"
+        >
+          <h3 class="mb-4">
+            Select the period of the
+            event:
+          </h3>
+
+          <v-time-picker
+            format="24hr"
+            v-model="form.time"
           />
         </v-col>
       </v-row>
@@ -68,7 +89,9 @@
             placeholder="Set a nice image banner for your MeetUp..."
             filled
             clearable
+            autocomplete="off"
             color="accent"
+            required
             v-model="form.imageUrl"
             :rules="rules.imageUrl"
           />
@@ -114,7 +137,8 @@ export default {
         title: '',
         intro: '',
         location: '',
-        date: '',
+        date: null,
+        time: `${new Date().getHours()}:${new Date().getMinutes()}`,
         imageUrl: ''
       },
       rules: {
@@ -130,11 +154,6 @@ export default {
           val =>
             (val || '').length < 140 ||
             'This field allows a maximum caracters of 140'
-        ],
-        date: [
-          val =>
-            (val || '').length > 0 ||
-            'This field is Required'
         ],
         location: [
           val =>
@@ -158,15 +177,69 @@ export default {
         this.form.date &&
         this.form.imageUrl
       )
+    },
+    convertedDate() {
+      const date = new Date(
+        `${this.form.date}GMT-0300`
+      )
+
+      if (
+        typeof this.form.time ===
+        'string'
+      ) {
+        let hours = this.form.time.match(
+          /^(\d+)/
+        )[1]
+        const minutes = this.form.time.match(
+          /:(\d+)/
+        )[1]
+
+        date.setHours(hours)
+        date.setMinutes(minutes)
+      } else {
+        date.setHours(
+          this.form.time.getHours()
+        )
+
+        date.setMinutes(
+          this.form.time.getMinutes()
+        )
+      }
+
+      return date
     }
+  },
+  mounted() {
+    this.localISOTime()
   },
   methods: {
     ...mapActions(['createMeetUp']),
     onCreateMeetUp() {
       if (!this.formIsValid) return
 
-      this.createMeetUp(this.form)
+      const meetUpData = {
+        title: this.form.title,
+        intro: this.form.intro,
+        location: this.form.location,
+        date: this.convertedDate,
+        imageUrl: this.form.imageUrl
+      }
+
+      this.createMeetUp(meetUpData)
       this.$router.push('/meetUps')
+    },
+    localISOTime() {
+      const tzOffset =
+        new Date().getTimezoneOffset() *
+        60000
+
+      const localISOTime = new Date(
+        Date.now() - tzOffset
+      )
+        .toISOString()
+        .substr(0, 10)
+
+      this.form.date = localISOTime
     }
   }
 }
