@@ -68,9 +68,11 @@
           cols="12"
           md="8"
           lg="4"
-          class="d-flex flex-column align-start"
+          class="d-flex flex-column align-md-center"
         >
-          <h3 class="mb-4">
+          <h3
+            class="mb-4 align-self-md-start"
+          >
             Select the period of the
             event:
           </h3>
@@ -87,6 +89,7 @@
           <v-text-field
             label="Banner"
             placeholder="Set a nice image banner for your MeetUp..."
+            hint="For now, enter with a String as path of the image"
             filled
             clearable
             autocomplete="off"

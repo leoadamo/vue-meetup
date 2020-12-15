@@ -23,6 +23,20 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item v-if="getUser">
+          <v-list-item-action
+            @click="onLogout"
+          >
+            <v-icon>
+              exit_to_app
+            </v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            Logout
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -57,12 +71,29 @@
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
+      <v-toolbar-items
+        class="d-none d-sm-flex"
+      >
+        <v-btn
+          v-if="getUser"
+          text
+          @click="onLogout"
+        >
+          <v-icon class="mr-2" small>
+            exit_to_app
+          </v-icon>
+          Logout
+        </v-btn>
+      </v-toolbar-items>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {
+  mapGetters,
+  mapActions
+} from 'vuex'
 
 export default {
   name: 'AppHeader',
@@ -105,6 +136,12 @@ export default {
         ]
       }
       return menuItems
+    }
+  },
+  methods: {
+    ...mapActions(['logout']),
+    onLogout() {
+      this.logout()
     }
   }
 }

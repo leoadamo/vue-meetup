@@ -18,6 +18,27 @@ export default new Vuex.Store({
     createMeetUp: (state, payload) =>
       state.meetUps.push(payload),
 
+    updateMeetUp: (state, payload) => {
+      const meetUp = state.meetUps.find(
+        meetUp =>
+          meetUp.id === payload.id
+      )
+
+      if (payload.title)
+        meetUp.title = payload.title
+
+      if (payload.intro)
+        meetUp.intro = payload.intro
+    },
+
+    removeMeetUp: (state, id) => {
+      state.meetUps
+        .filter(
+          meetUp => meetUp.id === id
+        )
+        .slice(0, 1)
+    },
+
     createUser: (state, payload) =>
       (state.user = payload),
 
@@ -44,6 +65,8 @@ export default new Vuex.Store({
 
           for (let key in response) {
             meetUps.push({
+              creatorId:
+                response[key].id,
               id: key,
               title:
                 response[key].title,
@@ -65,10 +88,11 @@ export default new Vuex.Store({
         })
     },
     createMeetUp: (
-      { commit },
+      { commit, getters },
       payload
     ) => {
       const meetUp = {
+        creatorId: getters.getUser.id,
         title: payload.title,
         intro: payload.intro,
         location: payload.location,
@@ -76,13 +100,15 @@ export default new Vuex.Store({
         imageUrl: payload.imageUrl
       }
       commit('setLoading', true)
+
       firebase
         .database()
         .ref('meetUps')
         .push(meetUp)
         .then(data => {
           const key = data.key
-          commit('createMeetup', {
+
+          commit('createMeetUp', {
             ...meetUp,
             id: key
           })
@@ -92,6 +118,51 @@ export default new Vuex.Store({
           commit('setLoading', false)
           commit('setError', error)
         })
+    },
+    updateMeetUp: (
+      { commit },
+      payload
+    ) => {
+      commit('setLoading', true)
+
+      const updatedObj = {}
+
+      if (payload.title)
+        updatedObj.title = payload.title
+
+      if (payload.intro)
+        updatedObj.intro = payload.intro
+
+      firebase
+        .database()
+        .ref(`meetUps/${payload.id}`)
+        .update(updatedObj)
+        .then(() => {
+          commit('setLoading', false)
+          commit(
+            'updateMeetUp',
+            payload
+          )
+        })
+        .catch(error => {
+          commit('setLoading', false)
+          commit('setError', error)
+        })
+    },
+    removeMeetUp({ commit }, id) {
+      commit('setLoading', true)
+
+      firebase
+        .database()
+        .ref(`meetUps/${id}`)
+        .remove()
+        .then(() => {
+          commit('setLoading', false)
+          commit('removeMeetUp', id)
+        })
+        .catch(error =>
+          commit('setError', error)
+        )
     },
     createUser: (
       { commit },
@@ -142,6 +213,16 @@ export default new Vuex.Store({
           commit('setLoading', false)
           commit('setError', error)
         })
+    },
+    autoSignIn({ commit }, payload) {
+      commit('createUser', {
+        id: payload.uid,
+        registeredMeetups: []
+      })
+    },
+    logout({ commit }) {
+      firebase.auth().signOut()
+      commit('createUser', null)
     },
     clearError: ({ commit }) =>
       commit('clearError')

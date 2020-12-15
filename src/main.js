@@ -49,5 +49,16 @@ new Vue({
     firebase.initializeApp(
       firebaseConfig
     )
+
+    firebase
+      .auth()
+      .onAuthStateChanged(user => {
+        if (user) {
+          this.$store.dispatch(
+            'autoSignIn',
+            user
+          )
+        }
+      })
   }
 }).$mount('#app')

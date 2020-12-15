@@ -16,7 +16,8 @@
       </v-img>
 
       <v-card-subtitle>
-        {{ meetUp.date | date }}
+        {{ meetUp.date | date }} -
+        {{ meetUp.location }}
       </v-card-subtitle>
 
       <v-card-text>
@@ -36,13 +37,36 @@
       >
         Explore
       </v-btn>
+
+      <template v-if="getUser">
+        <Edit :meetUp="meetUp" />
+
+        <v-btn
+          fab
+          small
+          v-if="getUser"
+          class="mb-1"
+          @click="onRemoveMeetUp"
+        >
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </template>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters
+} from 'vuex'
+import Edit from '@/components/Molecules/Dialogs/EditMeetUp'
+
 export default {
   name: 'Card',
+  components: {
+    Edit
+  },
   props: {
     meetUp: {
       type: Object,
@@ -54,6 +78,19 @@ export default {
     },
     mediaHeight: {
       type: String
+    }
+  },
+  computed: {
+    ...mapGetters(['getUser'])
+  },
+  methods: {
+    ...mapActions([
+      'removeMeetUp',
+      'loadMeetUps'
+    ]),
+    onRemoveMeetUp() {
+      this.removeMeetUp(this.meetUp.id)
+      this.loadMeetUps(this.meetUp.id)
     }
   }
 }
